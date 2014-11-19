@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14B25" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="BBTAuthor" syncable="YES">
+    <entity name="BBTAuthor" representedClassName="BBTAuthor" syncable="YES">
         <attribute name="active" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="authorID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="avatarURL" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -9,29 +9,29 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="contents" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="BBTContent" syncable="YES"/>
     </entity>
-    <entity name="BBTContent" syncable="YES">
+    <entity name="BBTContent" representedClassName="BBTContent" syncable="YES">
         <attribute name="bodyHTML" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="contentDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="contentID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="contentStatus" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="contentType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="contentID" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="contentStatus" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="contentType" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="createdAt" attributeType="Date" syncable="YES"/>
         <attribute name="headerImageInfo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="headerImageURL" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="onFocus" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="onTimeline" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="subTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="onFocus" attributeType="Boolean" syncable="YES"/>
+        <attribute name="onTimeline" attributeType="Boolean" syncable="YES"/>
+        <attribute name="subTitle" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="vedioURL" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BBTAuthor" syncable="YES"/>
+        <attribute name="updatedAt" attributeType="Date" syncable="YES"/>
+        <attribute name="vedioURL" attributeType="Transformable" syncable="YES"/>
+        <relationship name="author" maxCount="1" deletionRule="Nullify" destinationEntity="BBTAuthor" syncable="YES"/>
         <relationship name="parentContent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BBTContent" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BBTPhoto" syncable="YES"/>
-        <relationship name="publisher" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BBTPublisher" syncable="YES"/>
-        <relationship name="section" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BBTSection" syncable="YES"/>
-        <relationship name="subContents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BBTContent" syncable="YES"/>
+        <relationship name="publisher" maxCount="1" deletionRule="Nullify" destinationEntity="BBTPublisher" syncable="YES"/>
+        <relationship name="section" maxCount="1" deletionRule="Nullify" destinationEntity="BBTSection" syncable="YES"/>
+        <relationship name="subContents" toMany="YES" deletionRule="Nullify" destinationEntity="BBTContent" syncable="YES"/>
     </entity>
-    <entity name="BBTPhoto" syncable="YES">
+    <entity name="BBTPhoto" representedClassName="BBTPhoto" syncable="YES">
         <attribute name="imageURL" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="photoDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photographer" optional="YES" attributeType="String" syncable="YES"/>
@@ -39,13 +39,13 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="content" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BBTContent" syncable="YES"/>
     </entity>
-    <entity name="BBTPublisher" syncable="YES">
+    <entity name="BBTPublisher" representedClassName="BBTPublisher" syncable="YES">
         <attribute name="active" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="publisherID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="contents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BBTContent" syncable="YES"/>
     </entity>
-    <entity name="BBTSection" syncable="YES">
+    <entity name="BBTSection" representedClassName="BBTSection" syncable="YES">
         <attribute name="active" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="headerImageURL" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -55,10 +55,10 @@
         <relationship name="contents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BBTContent" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BBTContent" positionX="-351" positionY="-388" width="128" height="343"/>
         <element name="BBTAuthor" positionX="-578" positionY="-477" width="128" height="148"/>
-        <element name="BBTSection" positionX="-803" positionY="-234" width="128" height="148"/>
-        <element name="BBTPublisher" positionX="-612" positionY="5" width="128" height="103"/>
+        <element name="BBTContent" positionX="-351" positionY="-388" width="128" height="343"/>
         <element name="BBTPhoto" positionX="-81" positionY="-295" width="128" height="133"/>
+        <element name="BBTPublisher" positionX="-612" positionY="5" width="128" height="105"/>
+        <element name="BBTSection" positionX="-803" positionY="-234" width="128" height="150"/>
     </elements>
 </model>

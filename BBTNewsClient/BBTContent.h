@@ -7,37 +7,44 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
+@class BBTAuthor, BBTContent, BBTPhoto, BBTPublisher, BBTSection;
 
-typedef enum : NSUInteger {
-    BBTContentStatusDraft,
-    BBTContentStatusWatingForReview,
-    BBTContentStatusApproved,
-    BBTContentStatusRejected,
-    BBTContentStatusPublished,
-    BBTContentStatusArchived
-} BBTContentStatus;
+@interface BBTContent : NSManagedObject
 
-typedef enum : NSUInteger {
-    BBTContentTypeArticle,      // primitive
-    BBTContentTypeAlbum,        // primitive
-    BBTContentTypeVedio,        // primitive
-    BBTContentTypeSpecial       // a special will contail some sub contents of type BBTContent
-} BBTContentType;
+@property (nonatomic, retain) NSString * bodyHTML;
+@property (nonatomic, retain) NSString * contentDescription;
+@property (nonatomic, retain) NSNumber * contentID;
+@property (nonatomic, retain) NSNumber * contentStatus;
+@property (nonatomic, retain) NSNumber * contentType;
+@property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSString * headerImageInfo;
+@property (nonatomic, retain) id headerImageURL;
+@property (nonatomic, retain) NSNumber * onFocus;
+@property (nonatomic, retain) NSNumber * onTimeline;
+@property (nonatomic, retain) NSString * subTitle;
+@property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSDate * updatedAt;
+@property (nonatomic, retain) id vedioURL;
+@property (nonatomic, retain) BBTAuthor *author;
+@property (nonatomic, retain) BBTContent *parentContent;
+@property (nonatomic, retain) NSSet *photos;
+@property (nonatomic, retain) BBTPublisher *publisher;
+@property (nonatomic, retain) BBTSection *section;
+@property (nonatomic, retain) NSSet *subContents;
+@end
 
+@interface BBTContent (CoreDataGeneratedAccessors)
 
-@interface BBTContent : NSObject
+- (void)addPhotosObject:(BBTPhoto *)value;
+- (void)removePhotosObject:(BBTPhoto *)value;
+- (void)addPhotos:(NSSet *)values;
+- (void)removePhotos:(NSSet *)values;
 
-@property (nonatomic, strong) NSString              *title;
-@property (nonatomic, strong) NSString              *subTitle;
-@property (nonatomic, strong) NSString              *contentDescription;
-@property (nonatomic, strong) NSString              *headerImageURL;
-@property (nonatomic, strong) NSString              *headerImageInfo;
-@property (nonatomic)         BBTContentStatus      contentStatus;
-@property (nonatomic)         BOOL                  onFocus;
-@property (nonatomic)         BOOL                  onTimeline;
-@property (nonatomic)         NSString              *bodyHTML;
-
-
+- (void)addSubContentsObject:(BBTContent *)value;
+- (void)removeSubContentsObject:(BBTContent *)value;
+- (void)addSubContents:(NSSet *)values;
+- (void)removeSubContents:(NSSet *)values;
 
 @end
