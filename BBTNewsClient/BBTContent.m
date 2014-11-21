@@ -37,4 +37,37 @@
 @dynamic section;
 @dynamic subContents;
 
+// Beacause we use Core Data and out contentType and contentStatus should be enum type,
+// I made these fake properties to set and get contentType and contentStatus.
+// Always use these method rather than `-(BBTContentType)contentType` and `-(void)setContentType:` .
+- (BBTContentType)contentTypeRaw
+{
+    return (BBTContentType)[[self contentType] integerValue];
+}
+
+- (void)setContentTypeRaw:(BBTContentType)contentType
+{
+    [self setContentType:[NSNumber numberWithInteger:contentType]];
+}
+
+- (BBTContentStatus)contentStatusRaw
+{
+    return (BBTContentStatus)[[self contentStatus] integerValue];
+}
+
+- (void)setContentStatusRaw:(BBTContentStatus)contentStatus
+{
+    [self setContentStatus:[NSNumber numberWithInteger:contentStatus]];
+}
+
++ (NSSet *)keyPathsForValuesAffectingContentTypeRaw
+{
+    return [NSSet setWithObject:@"contentType"];
+}
+
++ (NSSet *)keyPathsForValuesAffectingContentStatusRaw
+{
+    return [NSSet setWithObject:@"contentStatus"];
+}
+
 @end

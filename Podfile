@@ -1,7 +1,4 @@
 platform :ios, '7.0'
 
-pod 'RestKit'
+pod "AFNetworking", "~> 2.0"
 
-# Testing and Search are optional components
-pod 'RestKit/Testing'
-pod 'RestKit/Search'

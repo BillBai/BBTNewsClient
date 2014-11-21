@@ -9,6 +9,22 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+typedef enum : NSUInteger {
+    BBTContentStatusDraft = 0,
+    BBTContentStatusWatingForReview = 1,
+    BBTContentStatusApproved = 2,
+    BBTContentStatusRejected = 3,
+    BBTContentStatusPublished = 4,
+    BBTContentStatusArchived = 5
+} BBTContentStatus;
+
+typedef enum : NSUInteger {
+    BBTContentTypeArticle = 0,      // primitive
+    BBTContentTypeAlbum = 1,        // a album will contain a set of BBTPhoto(s)
+    BBTContentTypeVedio = 2,        // primitive
+    BBTContentTypeSpecial = 3       // a special will contail some sub contents of type BBTContent
+} BBTContentType;
+
 @class BBTAuthor, BBTContent, BBTPhoto, BBTPublisher, BBTSection;
 
 @interface BBTContent : NSManagedObject

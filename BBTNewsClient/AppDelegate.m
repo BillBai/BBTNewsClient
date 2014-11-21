@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "BBTContent.h"
 @interface AppDelegate ()
 
 @end
@@ -16,7 +16,27 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    // Create Managed Object
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"BBTContent" inManagedObjectContext:self.managedObjectContext];
+    BBTContent *newContent = [[BBTContent alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.managedObjectContext];
+    [newContent setValue:@"Hello world!" forKey:@"title"];
+    
+    NSLog(@"%@", newContent);
+    
+    NSEntityDescription *photoDescription = [NSEntityDescription entityForName:@"BBTPhoto" inManagedObjectContext:self.managedObjectContext];
+    NSManagedObject *newPhoto = [[NSManagedObject alloc] initWithEntity:photoDescription insertIntoManagedObjectContext:self.managedObjectContext];
+    [newPhoto setValue:@"sky" forKey:@"title"];
+    [newPhoto setValue:@"nothing....." forKey:@"photoDescription"];
+    
+    [newContent setValue:[NSSet setWithObject:newPhoto] forKey:@"photos"];
+    
+    NSError *error = nil;
+    if (![newContent.managedObjectContext save:&error]) {
+        NSLog(@"Unable to save managed object context.");
+        NSLog(@"%@, %@", error, error.localizedDescription);
+    }
+    
     return YES;
 }
 

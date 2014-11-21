@@ -1,45 +1,30 @@
 PODS:
-  - AFNetworking (1.3.4)
-  - ISO8601DateFormatterValueTransformer (0.6.0):
-    - RKValueTransformers (~> 1.1.0)
-  - RestKit (0.23.3):
-    - RestKit/Core
-  - RestKit/Core (0.23.3):
-    - RestKit/CoreData
-    - RestKit/Network
-    - RestKit/ObjectMapping
-  - RestKit/CoreData (0.23.3):
-    - RestKit/ObjectMapping
-  - RestKit/Network (0.23.3):
-    - AFNetworking (~> 1.3.0)
-    - RestKit/ObjectMapping
-    - RestKit/Support
-    - SOCKit
-  - RestKit/ObjectMapping (0.23.3):
-    - ISO8601DateFormatterValueTransformer (~> 0.6.0)
-    - RestKit/Support
-    - RKValueTransformers (~> 1.1.0)
-  - RestKit/Search (0.23.3):
-    - RestKit/CoreData
-  - RestKit/Support (0.23.3):
-    - TransitionKit (= 2.1.0)
-  - RestKit/Testing (0.23.3):
-    - RestKit/Network
-  - RKValueTransformers (1.1.0)
-  - SOCKit (1.1)
-  - TransitionKit (2.1.0)
+  - AFNetworking (2.5.0):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+    - AFNetworking/UIKit
+  - AFNetworking/NSURLConnection (2.5.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.5.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.5.0)
+  - AFNetworking/Security (2.5.0)
+  - AFNetworking/Serialization (2.5.0)
+  - AFNetworking/UIKit (2.5.0):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
 
 DEPENDENCIES:
-  - RestKit
-  - RestKit/Search
-  - RestKit/Testing
+  - AFNetworking (~> 2.0)
 
 SPEC CHECKSUMS:
-  AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
-  ISO8601DateFormatterValueTransformer: a705384ea6531255258e25b6480ba1180db703a0
-  RestKit: 193a35cddae5198388977abaedad129f8acb978b
-  RKValueTransformers: b705e7b4651b9206b94600408462b74554bba969
-  SOCKit: d8d0dd3688ae1026c12367570da8fa8e1a6980fb
-  TransitionKit: 6a6f3ddda38ae758778aa889dcb930e4f8d64edc
+  AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
 
 COCOAPODS: 0.34.2

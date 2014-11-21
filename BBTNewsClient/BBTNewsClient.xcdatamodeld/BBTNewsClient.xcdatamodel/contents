@@ -55,10 +55,10 @@
         <relationship name="contents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="BBTContent" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BBTAuthor" positionX="-578" positionY="-477" width="128" height="148"/>
+        <element name="BBTAuthor" positionX="-504" positionY="-393" width="128" height="150"/>
         <element name="BBTContent" positionX="-351" positionY="-388" width="128" height="343"/>
         <element name="BBTPhoto" positionX="-81" positionY="-295" width="128" height="133"/>
-        <element name="BBTPublisher" positionX="-612" positionY="5" width="128" height="105"/>
-        <element name="BBTSection" positionX="-803" positionY="-234" width="128" height="150"/>
+        <element name="BBTPublisher" positionX="-432" positionY="93" width="128" height="105"/>
+        <element name="BBTSection" positionX="-558" positionY="-258" width="128" height="150"/>
     </elements>
 </model>
