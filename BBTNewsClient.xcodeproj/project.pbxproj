@@ -22,6 +22,8 @@
 		A932930B1A1B9E4C000DFDB3 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A93293091A1B9E4C000DFDB3 /* LaunchScreen.xib */; };
 		A93293171A1B9E4C000DFDB3 /* BBTNewsClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A93293161A1B9E4C000DFDB3 /* BBTNewsClientTests.m */; };
 		A935ED4F1A1ED9B800835168 /* BBTNewsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A935ED4E1A1ED9B800835168 /* BBTNewsClient.m */; };
+		A935ED531A1F9C0E00835168 /* BBTFetchContentListOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A935ED521A1F9C0E00835168 /* BBTFetchContentListOperation.m */; };
+		A935ED561A1FB0D100835168 /* BBTHTTPOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A935ED551A1FB0D100835168 /* BBTHTTPOperationManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,10 @@
 		A93293161A1B9E4C000DFDB3 /* BBTNewsClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BBTNewsClientTests.m; sourceTree = "<group>"; };
 		A935ED4D1A1ED9B800835168 /* BBTNewsClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBTNewsClient.h; sourceTree = "<group>"; };
 		A935ED4E1A1ED9B800835168 /* BBTNewsClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBTNewsClient.m; sourceTree = "<group>"; };
+		A935ED511A1F9C0E00835168 /* BBTFetchContentListOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBTFetchContentListOperation.h; sourceTree = "<group>"; };
+		A935ED521A1F9C0E00835168 /* BBTFetchContentListOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBTFetchContentListOperation.m; sourceTree = "<group>"; };
+		A935ED541A1FB0D100835168 /* BBTHTTPOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBTHTTPOperationManager.h; sourceTree = "<group>"; };
+		A935ED551A1FB0D100835168 /* BBTHTTPOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBTHTTPOperationManager.m; sourceTree = "<group>"; };
 		D554D8C2DF1ED077C3B52745 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,6 +111,7 @@
 		A91DAE761A1CBF530064870C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A93292FE1A1B9E4C000DFDB3 /* BBTNewsClient.xcdatamodeld */,
 				A91DAE731A1CBF4A0064870C /* BBTContent.h */,
 				A91DAE741A1CBF4A0064870C /* BBTContent.m */,
 				A91DAE701A1CBF4A0064870C /* BBTPublisher.h */,
@@ -148,10 +155,13 @@
 				A93293021A1B9E4C000DFDB3 /* ViewController.m */,
 				A935ED4D1A1ED9B800835168 /* BBTNewsClient.h */,
 				A935ED4E1A1ED9B800835168 /* BBTNewsClient.m */,
+				A935ED511A1F9C0E00835168 /* BBTFetchContentListOperation.h */,
+				A935ED521A1F9C0E00835168 /* BBTFetchContentListOperation.m */,
+				A935ED541A1FB0D100835168 /* BBTHTTPOperationManager.h */,
+				A935ED551A1FB0D100835168 /* BBTHTTPOperationManager.m */,
 				A93293041A1B9E4C000DFDB3 /* Main.storyboard */,
 				A93293071A1B9E4C000DFDB3 /* Images.xcassets */,
 				A93293091A1B9E4C000DFDB3 /* LaunchScreen.xib */,
-				A93292FE1A1B9E4C000DFDB3 /* BBTNewsClient.xcdatamodeld */,
 				A91DAE761A1CBF530064870C /* Model */,
 				A93292F71A1B9E4C000DFDB3 /* Supporting Files */,
 			);
@@ -327,6 +337,8 @@
 				A91DAE6C1A1CBF4A0064870C /* BBTSection.m in Sources */,
 				A93292FD1A1B9E4C000DFDB3 /* AppDelegate.m in Sources */,
 				A93293031A1B9E4C000DFDB3 /* ViewController.m in Sources */,
+				A935ED561A1FB0D100835168 /* BBTHTTPOperationManager.m in Sources */,
+				A935ED531A1F9C0E00835168 /* BBTFetchContentListOperation.m in Sources */,
 				A93292FA1A1B9E4C000DFDB3 /* main.m in Sources */,
 				A91DAE721A1CBF4A0064870C /* BBTPublisher.m in Sources */,
 			);

@@ -16,8 +16,11 @@
         <attribute name="contentStatus" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="contentType" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="createdAt" attributeType="Date" syncable="YES"/>
+        <attribute name="eTag" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="headerImageInfo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="headerImageURL" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="isFavorite" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isRead" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="onFocus" attributeType="Boolean" syncable="YES"/>
         <attribute name="onTimeline" attributeType="Boolean" syncable="YES"/>
         <attribute name="subTitle" attributeType="String" syncable="YES"/>
@@ -56,7 +59,7 @@
     </entity>
     <elements>
         <element name="BBTAuthor" positionX="-504" positionY="-393" width="128" height="150"/>
-        <element name="BBTContent" positionX="-351" positionY="-388" width="128" height="343"/>
+        <element name="BBTContent" positionX="-351" positionY="-388" width="128" height="390"/>
         <element name="BBTPhoto" positionX="-81" positionY="-295" width="128" height="133"/>
         <element name="BBTPublisher" positionX="-432" positionY="93" width="128" height="105"/>
         <element name="BBTSection" positionX="-558" positionY="-258" width="128" height="150"/>

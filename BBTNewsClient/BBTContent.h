@@ -49,6 +49,9 @@ typedef enum : NSUInteger {
 @property (nonatomic, retain) BBTPublisher *publisher;
 @property (nonatomic, retain) BBTSection *section;
 @property (nonatomic, retain) NSSet *subContents;
+@property (nonatomic, retain) NSString *eTag;
+@property (nonatomic, retain) NSNumber *isFavorite;
+@property (nonatomic, retain) NSNumber *isRead;
 @end
 
 @interface BBTContent (CoreDataGeneratedAccessors)
