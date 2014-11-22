@@ -196,6 +196,15 @@ typedef void (^success_block_t)(NSArray *results);
             for (NSDictionary *content in self.contents) {
                 BBTContent *newContent = [[BBTContent alloc] initWithEntity:contentEntity insertIntoManagedObjectContext:self.privateManagedObjectContext];
                 [newContent loadFromDictionary:content];
+                NSManagedObjectID *publisherID = publisherIDcache[content[@"publisher"][@"id"]];
+                BBTPublisher *thePublisher = (BBTPublisher *)[self.privateManagedObjectContext objectWithID:publisherID];
+                newContent.publisher = thePublisher;
+                NSManagedObjectID *sectionID = sectionIDcache[content[@"section"][@"id"]];
+                BBTSection *theSection = (BBTSection *)[self.privateManagedObjectContext objectWithID:sectionID];
+                newContent.section = theSection;
+                NSManagedObjectID *authorID = authorIDcache[content[@"author"][@"id"]];
+                BBTAuthor *theAuthor = (BBTAuthor *)[self.privateManagedObjectContext objectWithID:authorID];
+                newContent.author = theAuthor;
                 [results addObject:[newContent objectID]];
             }
         }

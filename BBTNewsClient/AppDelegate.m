@@ -18,20 +18,20 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//   [[BBTNewsClient sharedNewsClient] getContentsForPublisher:nil
-//                                                     onFocus:NO
-//                                                  onTimeline:YES
-//                                                 contentType:BBTContentTypeNone
-//                                                     sinceID:nil
-//                                                       maxID:nil
-//                                                       count:nil
-//                                                     success:^(NSArray *results) {
-//                                                         NSLog(@"log from main: success");
-//                                                         NSLog(@"%@", results);
-//                                                     }
-//                                                       error:^(NSError *error) {
-//                                                           NSLog(@"log from main: ERROR!!!");
-//                                                       }];
+   [[BBTNewsClient sharedNewsClient] getContentsForPublisher:nil
+                                                     onFocus:NO
+                                                  onTimeline:YES
+                                                 contentType:BBTContentTypeNone
+                                                     sinceID:nil
+                                                       maxID:nil
+                                                       count:nil
+                                                     success:^(NSArray *results) {
+                                                         NSLog(@"log from main: success");
+                                                         NSLog(@"%@", results);
+                                                     }
+                                                       error:^(NSError *error) {
+                                                           NSLog(@"log from main: ERROR!!!");
+                                                       }];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"BBTContent" inManagedObjectContext:[BBTNewsClient sharedNewsClient].mainManagedObjectContext];
