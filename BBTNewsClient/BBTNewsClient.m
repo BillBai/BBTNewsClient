@@ -8,7 +8,8 @@
 
 #import "BBTNewsClient.h"
 #import "BBTFetchContentListOperation.h"
-#import "BBTImportContentsOperation.h"
+#import "BBTImportContentListOperation.h"
+#import "BBTImportContentOperation.h"
 #import "BBTHTTPSessionManager.h"
 
 
@@ -70,11 +71,17 @@ typedef void (^error_block_t)(NSError *error);
 {
     [[BBTHTTPSessionManager sharedManager] getContent:contentID
                                               succeed:^(NSDictionary *contentDict) {
-                                                  NSLog(@"log contentDict news client: success!!! %@", contentDict);
-                                                  successBlock(nil);
+                                                  NSLog(@"log contentDict news client: success!!!");
+                                                  BBTImportContentOperation *operation =
+                                                  [[BBTImportContentOperation alloc] initWithContents:contentDict success:^(NSManagedObjectID *managenContentID) {
+                                                      successBlock((BBTContent *)[self.mainManagedObjectContext objectWithID:managenContentID]);
+                                                  }];
+                                                  operation.mainManagedObjectContext = self.mainManagedObjectContext;
+                                                  [self.operationQueue addOperation:operation];
                                               }
                                                 error:^(NSError *error) {
                                                     NSLog(@"log from news client: ERROR!!! %@", error.localizedDescription);
+                                                    //fetch the content;
                                                     errorBlock(error);
                                                 }];
 
@@ -95,7 +102,7 @@ typedef void (^error_block_t)(NSError *error);
         success_block_t successBlockForNetWork  = ^(NSArray *results) {
             //NSLog(@"log from news client: network success!!! %@", results);
             // import the results (of NSDictionarys) to Core Data
-            BBTImportContentsOperation *operation = [[BBTImportContentsOperation alloc] initWithContents:results success:^(NSArray *contentIDs) {
+            BBTImportContentListOperation *operation = [[BBTImportContentListOperation alloc] initWithContents:results success:^(NSArray *contentIDs) {
                 NSMutableArray *fetchedContents = [NSMutableArray arrayWithCapacity:[contentIDs count]];
                 for (NSManagedObjectID *contentID in contentIDs) {
                     [fetchedContents addObject:[self.mainManagedObjectContext objectWithID:contentID]];

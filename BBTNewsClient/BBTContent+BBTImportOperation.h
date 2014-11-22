@@ -10,6 +10,6 @@
 
 @interface BBTContent (BBTImportOperation)
 
-- (void)loadFromDictionary:(NSDictionary *)dictionary;
-
+- (void)loadFromReducedDictionary:(NSDictionary *)dictionary;
+- (void)loadFromFullDictionary:(NSDictionary *)dictionary;
 @end

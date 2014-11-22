@@ -18,36 +18,44 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-   [[BBTNewsClient sharedNewsClient] getContentsForPublisher:nil
-                                                     onFocus:NO
-                                                  onTimeline:YES
-                                                 contentType:BBTContentTypeNone
-                                                     sinceID:nil
-                                                       maxID:nil
-                                                       count:nil
-                                                     success:^(NSArray *results) {
-                                                         NSLog(@"log from main: success");
-                                                         NSLog(@"%@", results);
-                                                     }
-                                                       error:^(NSError *error) {
-                                                           NSLog(@"log from main: ERROR!!!");
-                                                       }];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"BBTContent" inManagedObjectContext:[BBTNewsClient sharedNewsClient].mainManagedObjectContext];
-    [fetchRequest setEntity:entity];
-    [fetchRequest setReturnsObjectsAsFaults:NO];
-    
-    NSError *error = nil;
-    NSArray *result = [[BBTNewsClient sharedNewsClient].mainManagedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
-    if (error) {
-        NSLog(@"Unable to execute fetch request.");
-        NSLog(@"%@, %@", error, error.localizedDescription);
-        
-    } else {
-        NSLog(@"fetched results : %@", result);
-    }
+//   [[BBTNewsClient sharedNewsClient] getContentsForPublisher:nil
+//                                                     onFocus:NO
+//                                                  onTimeline:YES
+//                                                 contentType:BBTContentTypeNone
+//                                                     sinceID:nil
+//                                                       maxID:@(42)
+//                                                       count:@(42)
+//                                                     success:^(NSArray *results) {
+//                                                         NSLog(@"log from main: success");
+//                                                         NSLog(@"%@", results);
+//                                                     }
+//                                                       error:^(NSError *error) {
+//                                                           NSLog(@"log from main: ERROR!!!");
+//                                                       }];
+    [[BBTNewsClient sharedNewsClient] getContent:@(44)
+                                         success:^(BBTContent *content) {
+                                             NSLog(@"photos %@", content.photos);
+                                         }
+                                           error:^(NSError *error) {
+                                           
+                                           }];
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    
+//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"BBTContent" inManagedObjectContext:[BBTNewsClient sharedNewsClient].mainManagedObjectContext];
+//    [fetchRequest setEntity:entity];
+//    [fetchRequest setReturnsObjectsAsFaults:NO];
+//    
+//    NSError *error = nil;
+//    NSArray *result = [[BBTNewsClient sharedNewsClient].mainManagedObjectContext executeFetchRequest:fetchRequest error:&error];
+//    
+//    if (error) {
+//        NSLog(@"Unable to execute fetch request.");
+//        NSLog(@"%@, %@", error, error.localizedDescription);
+//        
+//    } else {
+//        NSLog(@"fetched results : %@", result);
+//        NSLog(@"count: %lu", (unsigned long)[result count]);
+//    }
     return YES;
 }
 

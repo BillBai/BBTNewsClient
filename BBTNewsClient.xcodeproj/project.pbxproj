@@ -25,8 +25,9 @@
 		A935ED531A1F9C0E00835168 /* BBTFetchContentListOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A935ED521A1F9C0E00835168 /* BBTFetchContentListOperation.m */; };
 		A935ED591A2022D600835168 /* BBTHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A935ED581A2022D600835168 /* BBTHTTPSessionManager.m */; };
 		A935ED5C1A203E8700835168 /* NSError+BBTNewsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A935ED5B1A203E8700835168 /* NSError+BBTNewsClient.m */; };
-		A9CDC4001A205E2100551962 /* BBTImportContentsOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9CDC3FF1A205E2100551962 /* BBTImportContentsOperation.m */; };
+		A9CDC4001A205E2100551962 /* BBTImportContentListOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9CDC3FF1A205E2100551962 /* BBTImportContentListOperation.m */; };
 		A9CDC4031A2060A400551962 /* BBTContent+BBTImportOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9CDC4021A2060A400551962 /* BBTContent+BBTImportOperation.m */; };
+		A9F6D1CD1A20E37D00189875 /* BBTImportContentOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F6D1CC1A20E37D00189875 /* BBTImportContentOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,10 +75,12 @@
 		A935ED581A2022D600835168 /* BBTHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBTHTTPSessionManager.m; sourceTree = "<group>"; };
 		A935ED5A1A203E8700835168 /* NSError+BBTNewsClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+BBTNewsClient.h"; sourceTree = "<group>"; };
 		A935ED5B1A203E8700835168 /* NSError+BBTNewsClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+BBTNewsClient.m"; sourceTree = "<group>"; };
-		A9CDC3FE1A205E2100551962 /* BBTImportContentsOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBTImportContentsOperation.h; sourceTree = "<group>"; };
-		A9CDC3FF1A205E2100551962 /* BBTImportContentsOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBTImportContentsOperation.m; sourceTree = "<group>"; };
+		A9CDC3FE1A205E2100551962 /* BBTImportContentListOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBTImportContentListOperation.h; sourceTree = "<group>"; };
+		A9CDC3FF1A205E2100551962 /* BBTImportContentListOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBTImportContentListOperation.m; sourceTree = "<group>"; };
 		A9CDC4011A2060A400551962 /* BBTContent+BBTImportOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BBTContent+BBTImportOperation.h"; sourceTree = "<group>"; };
 		A9CDC4021A2060A400551962 /* BBTContent+BBTImportOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BBTContent+BBTImportOperation.m"; sourceTree = "<group>"; };
+		A9F6D1CB1A20E37D00189875 /* BBTImportContentOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBTImportContentOperation.h; sourceTree = "<group>"; };
+		A9F6D1CC1A20E37D00189875 /* BBTImportContentOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBTImportContentOperation.m; sourceTree = "<group>"; };
 		D554D8C2DF1ED077C3B52745 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -164,8 +167,10 @@
 				A93293021A1B9E4C000DFDB3 /* ViewController.m */,
 				A935ED4D1A1ED9B800835168 /* BBTNewsClient.h */,
 				A935ED4E1A1ED9B800835168 /* BBTNewsClient.m */,
-				A9CDC3FE1A205E2100551962 /* BBTImportContentsOperation.h */,
-				A9CDC3FF1A205E2100551962 /* BBTImportContentsOperation.m */,
+				A9CDC3FE1A205E2100551962 /* BBTImportContentListOperation.h */,
+				A9CDC3FF1A205E2100551962 /* BBTImportContentListOperation.m */,
+				A9F6D1CB1A20E37D00189875 /* BBTImportContentOperation.h */,
+				A9F6D1CC1A20E37D00189875 /* BBTImportContentOperation.m */,
 				A9CDC4011A2060A400551962 /* BBTContent+BBTImportOperation.h */,
 				A9CDC4021A2060A400551962 /* BBTContent+BBTImportOperation.m */,
 				A935ED511A1F9C0E00835168 /* BBTFetchContentListOperation.h */,
@@ -349,6 +354,7 @@
 				A91DAE6F1A1CBF4A0064870C /* BBTAuthor.m in Sources */,
 				A9CDC4031A2060A400551962 /* BBTContent+BBTImportOperation.m in Sources */,
 				A91DAE691A1CBF490064870C /* BBTPhoto.m in Sources */,
+				A9F6D1CD1A20E37D00189875 /* BBTImportContentOperation.m in Sources */,
 				A91DAE751A1CBF4A0064870C /* BBTContent.m in Sources */,
 				A91DAE6C1A1CBF4A0064870C /* BBTSection.m in Sources */,
 				A93292FD1A1B9E4C000DFDB3 /* AppDelegate.m in Sources */,
@@ -356,7 +362,7 @@
 				A935ED591A2022D600835168 /* BBTHTTPSessionManager.m in Sources */,
 				A935ED531A1F9C0E00835168 /* BBTFetchContentListOperation.m in Sources */,
 				A93292FA1A1B9E4C000DFDB3 /* main.m in Sources */,
-				A9CDC4001A205E2100551962 /* BBTImportContentsOperation.m in Sources */,
+				A9CDC4001A205E2100551962 /* BBTImportContentListOperation.m in Sources */,
 				A91DAE721A1CBF4A0064870C /* BBTPublisher.m in Sources */,
 				A935ED5C1A203E8700835168 /* NSError+BBTNewsClient.m in Sources */,
 			);

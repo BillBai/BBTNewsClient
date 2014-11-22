@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @import CoreData;
 
-@interface BBTImportContentsOperation : NSOperation
+@interface BBTImportContentListOperation : NSOperation
 @property (nonatomic, strong) NSManagedObjectContext *mainManagedObjectContext;
 
 - (instancetype)initWithContents:(NSArray *)contents // of NSDictionary

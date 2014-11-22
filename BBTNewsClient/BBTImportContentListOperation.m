@@ -7,7 +7,7 @@
 //  Copyright (c) 2014 BBT. All rights reserved.
 //
 
-#import "BBTImportContentsOperation.h"
+#import "BBTImportContentListOperation.h"
 #import "BBTContent+BBTImportOperation.h"
 #import "BBTPublisher.h"
 #import "BBTSection.h"
@@ -17,13 +17,13 @@ extern uint64_t dispatch_benchmark(size_t count, void (^block)(void));
 
 typedef void (^success_block_t)(NSArray *results);
 
-@interface BBTImportContentsOperation()
+@interface BBTImportContentListOperation()
 @property (nonatomic, strong) NSManagedObjectContext *privateManagedObjectContext;
 @property (copy) success_block_t successBlock;
 @property (nonatomic, strong) NSArray *contents; // of NSDictionary
 @end
 
-@implementation BBTImportContentsOperation
+@implementation BBTImportContentListOperation
 - (instancetype)initWithContents:(NSArray *)contents // of NSDictionary
                          success:(void (^)(NSArray *results))successBlock
 {
@@ -62,22 +62,21 @@ typedef void (^success_block_t)(NSArray *results);
         [publisherFetchRequest setEntity:
          [NSEntityDescription entityForName:@"BBTPublisher" inManagedObjectContext:self.privateManagedObjectContext]];
         [publisherFetchRequest setPredicate:[NSPredicate predicateWithFormat:@"(publisherID IN %@)", publisherIDs]];
-        [publisherFetchRequest setSortDescriptors:@[ [[NSSortDescriptor alloc] initWithKey:@"publisherID" ascending:YES] ]];
+        [publisherFetchRequest setSortDescriptors:@[ [[NSSortDescriptor alloc] initWithKey:@"publisherID" ascending:NO] ]];
         
         // create the fetch request to get all BBTSection matching the IDs
         NSFetchRequest *sectionFetchRequest = [[NSFetchRequest alloc] init];
         [sectionFetchRequest setEntity:
          [NSEntityDescription entityForName:@"BBTSection" inManagedObjectContext:self.privateManagedObjectContext]];
         [sectionFetchRequest setPredicate:[NSPredicate predicateWithFormat:@"(sectionID IN %@)", sectionIDs]];
-        [sectionFetchRequest setSortDescriptors:@[ [[NSSortDescriptor alloc] initWithKey:@"sectionID" ascending:YES] ]];
+        [sectionFetchRequest setSortDescriptors:@[ [[NSSortDescriptor alloc] initWithKey:@"sectionID" ascending:NO] ]];
         
         // create the fetch request to get all BBTAuthor matching the IDs
         NSFetchRequest *authorFetchRequest = [[NSFetchRequest alloc] init];
         [authorFetchRequest setEntity:
          [NSEntityDescription entityForName:@"BBTAuthor" inManagedObjectContext:self.privateManagedObjectContext]];
         [authorFetchRequest setPredicate:[NSPredicate predicateWithFormat:@"(authorID IN %@)", authorIDs]];
-        [authorFetchRequest setSortDescriptors:@[ [[NSSortDescriptor alloc] initWithKey:@"authorID" ascending:YES] ]];
-        
+        [authorFetchRequest setSortDescriptors:@[ [[NSSortDescriptor alloc] initWithKey:@"authorID" ascending:NO] ]];
         
         
         // fetch the publisher, section and the author, save them to corresponding cache.
@@ -135,12 +134,11 @@ typedef void (^success_block_t)(NSArray *results);
         [fetchRequest setEntity:
          [NSEntityDescription entityForName:@"BBTContent" inManagedObjectContext:self.privateManagedObjectContext]];
         [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"(contentID IN %@)", contentIDs]];
-        [fetchRequest setSortDescriptors:@[ [[NSSortDescriptor alloc] initWithKey:@"contentID" ascending:YES] ]];
+        [fetchRequest setSortDescriptors:@[ [[NSSortDescriptor alloc] initWithKey:@"contentID" ascending:NO] ]];
         
         // Execute the fetch.
         NSArray *contentsMatchingIDs = [self.privateManagedObjectContext executeFetchRequest:fetchRequest error:&error];
-        
-        
+
         // merge fetched content with the content dictionary from API
         NSEntityDescription *contentEntity = [NSEntityDescription entityForName:@"BBTContent" inManagedObjectContext:self.privateManagedObjectContext];
         NSMutableArray *results = [NSMutableArray arrayWithCapacity:[self.contents count]];
@@ -153,7 +151,7 @@ typedef void (^success_block_t)(NSArray *results);
                     // if the content does not exist, creat one.
                     NSLog(@"content: %@ not in cache, merging...", self.contents[i][@"id"]);
                     BBTContent *newContent = [[BBTContent alloc] initWithEntity:contentEntity insertIntoManagedObjectContext:self.privateManagedObjectContext];
-                    [newContent loadFromDictionary:self.contents[i]];
+                    [newContent loadFromReducedDictionary:self.contents[i]];
                     NSManagedObjectID *publisherID = publisherIDcache[self.contents[i][@"publisher"][@"id"]];
                     BBTPublisher *thePublisher = (BBTPublisher *)[self.privateManagedObjectContext objectWithID:publisherID];
                     newContent.publisher = thePublisher;
@@ -167,7 +165,7 @@ typedef void (^success_block_t)(NSArray *results);
                 } else {
                     // if exist, update it.
                     NSLog(@"content: %@  in cache, updating...", self.contents[i][@"id"]);
-                    [(BBTContent *)contentsMatchingIDs[j] loadFromDictionary:self.contents[i]];
+                    [(BBTContent *)contentsMatchingIDs[j] loadFromReducedDictionary:self.contents[i]];
                     [results addObject:[(BBTContent *)contentsMatchingIDs[j] objectID]];
                     j++;
                 }
@@ -177,7 +175,7 @@ typedef void (^success_block_t)(NSArray *results);
                 for (; i < [self.contents count]; i++) {
                     NSLog(@"content: %@ not in cache, merging...", self.contents[i][@"id"]);
                     BBTContent *newContent = [[BBTContent alloc] initWithEntity:contentEntity insertIntoManagedObjectContext:self.privateManagedObjectContext];
-                    [newContent loadFromDictionary:self.contents[i]];
+                    [newContent loadFromReducedDictionary:self.contents[i]];
                     NSManagedObjectID *publisherID = publisherIDcache[self.contents[i][@"publisher"][@"id"]];
                     BBTPublisher *thePublisher = (BBTPublisher *)[self.privateManagedObjectContext objectWithID:publisherID];
                     newContent.publisher = thePublisher;
@@ -188,14 +186,13 @@ typedef void (^success_block_t)(NSArray *results);
                     BBTAuthor *theAuthor = (BBTAuthor *)[self.privateManagedObjectContext objectWithID:authorID];
                     newContent.author = theAuthor;
                     [results addObject:[newContent objectID]];
-                    [results addObject:[newContent objectID]];
                 }
             }
         } else {
             NSLog(@"write content into core data");
             for (NSDictionary *content in self.contents) {
                 BBTContent *newContent = [[BBTContent alloc] initWithEntity:contentEntity insertIntoManagedObjectContext:self.privateManagedObjectContext];
-                [newContent loadFromDictionary:content];
+                [newContent loadFromReducedDictionary:content];
                 NSManagedObjectID *publisherID = publisherIDcache[content[@"publisher"][@"id"]];
                 BBTPublisher *thePublisher = (BBTPublisher *)[self.privateManagedObjectContext objectWithID:publisherID];
                 newContent.publisher = thePublisher;

@@ -79,7 +79,6 @@
           if ([responseObject isKindOfClass:[NSDictionary class]]) {
                 successBlock(responseObject);
           }
-          successBlock(@{});
       }
       failure:^(NSURLSessionDataTask *dataTask, NSError *error) {
           NSLog(@"log from HTTP session manager: ERROR!!! data task: %@", dataTask);
@@ -97,7 +96,7 @@
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     if (sinceID) { params[@"since_id"] = [sinceID stringValue]; }
     if (maxID) { params[@"max_id"] = [maxID stringValue]; }
-    if (count) { params[@"count"] = [count stringValue]; }
+    if (count) { params[@"limit"] = [count stringValue]; }
     params[@"on_focus"] = onFocus ? @"true" : @"false";
     params[@"on_timeline"] = onTimeline ? @"true" : @"false";
     if (contentType != BBTContentTypeNone) {
