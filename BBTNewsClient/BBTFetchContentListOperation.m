@@ -31,20 +31,19 @@ typedef void (^error_block_t)(NSError *error);
 
 @implementation BBTFetchContentListOperation
 
-- (instancetype)initWithMainManagedObjectContext:(NSManagedObjectContext *)mainObjectContext
-                                       Publisher:(NSNumber *)publisherID
-                                         onFocus:(BOOL)onFocus
-                                      onTimeline:(BOOL)onTimeline
-                                     contentType:(BBTContentType)contentType
-                                         sinceID:(NSNumber *)sinceID
-                                           maxID:(NSNumber *)maxID
-                                           count:(NSNumber *)count
-                                         success:(void (^)(NSArray *))successBlock
-                                           error:(void (^)(NSError *))errorBlock
+- (instancetype)initWithPublisher:(NSNumber *)publisherID
+                          onFocus:(BOOL)onFocus
+                       onTimeline:(BOOL)onTimeline
+                      contentType:(BBTContentType)contentType
+                          sinceID:(NSNumber *)sinceID
+                            maxID:(NSNumber *)maxID
+                            count:(NSNumber *)count
+                          success:(void (^)(NSArray *result))successBlock
+                            error:(void (^)(NSError *error))errorBlock;
+
 {
     self = [super init];
     if (self) {
-        self.mainManagedObjectContext = mainObjectContext;
         self.successBlock = successBlock;
         self.errorBlock = errorBlock;
         self.publisherID = publisherID;
@@ -62,8 +61,9 @@ typedef void (^error_block_t)(NSError *error);
 - (void)main
 {
     self.privateManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    self.privateManagedObjectContext.undoManager = nil; // set the undoManager to nil can have better performance
     
-    [self.privateManagedObjectContext setParentContext:self.mainManagedObjectContext];
+    [self.privateManagedObjectContext setParentContext:self.mainManagedObjectContext];  // set the parent contetxt to merge the change in to
     
 }
 

@@ -20,6 +20,10 @@
                       sinceID:(NSNumber *)sinceID
                         maxID:(NSNumber *)maxID
                         count:(NSNumber *)count
-                      success:(void (^) ( NSArray *result))successBlock
-                        error:(void (^) ( NSError *error ))errorBlock;
+                      success:(void (^) (NSArray *result))successBlock // of dictionary
+                        error:(void (^) (NSError *error ))errorBlock;
+
+- (void)getContent:(NSNumber *)contentID
+           succeed:(void (^)(NSDictionary *contentDict))successBlock
+             error:(void (^)(NSError *error))errorBlock;
 @end

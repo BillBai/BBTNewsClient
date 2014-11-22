@@ -8,7 +8,12 @@
 
 #import "BBTNewsClient.h"
 #import "BBTFetchContentListOperation.h"
+#import "BBTImportContentsOperation.h"
 #import "BBTHTTPSessionManager.h"
+
+
+typedef void (^success_block_t)(NSArray *results);
+typedef void (^error_block_t)(NSError *error);
 
 @interface BBTNewsClient()
 
@@ -63,6 +68,15 @@
            success:(void (^)(BBTContent *))successBlock
              error:(void (^)(NSError *))errorBlock
 {
+    [[BBTHTTPSessionManager sharedManager] getContent:contentID
+                                              succeed:^(NSDictionary *contentDict) {
+                                                  NSLog(@"log contentDict news client: success!!! %@", contentDict);
+                                                  successBlock(nil);
+                                              }
+                                                error:^(NSError *error) {
+                                                    NSLog(@"log from news client: ERROR!!! %@", error.localizedDescription);
+                                                    errorBlock(error);
+                                                }];
 
 }
 
@@ -77,21 +91,66 @@
                         success:(void (^)(NSArray *results))successBlock // of BBTContent
                           error:(void (^)(NSError *error))errorBlock;
 {
-    [[BBTHTTPSessionManager sharedManager] getContentsForPublisher:publisherID
-                                                           onFocus:onFocus
-                                                        onTimeline:onTimeline
-                                                       contentType:contentType
-                                                           sinceID:sinceID
-                                                             maxID:maxID
-                                                             count:count
-                                                           success:^(NSArray *results) {
-                                                               NSLog(@"log from news client: success!!! %@", results);
-                                                               successBlock(results);
-                                                           }
-                                                             error:^(NSError *error) {
-                                                                 NSLog(@"log from news client: ERROR!!! %@", error.localizedDescription);
-                                                                 errorBlock(error);
-                                                             }];
+    if (self.isOnline) {
+        success_block_t successBlockForNetWork  = ^(NSArray *results) {
+            //NSLog(@"log from news client: network success!!! %@", results);
+            // import the results (of NSDictionarys) to Core Data
+            BBTImportContentsOperation *operation = [[BBTImportContentsOperation alloc] initWithContents:results success:^(NSArray *contentResults) {
+                successBlock(contentResults);
+            }];
+            operation.mainManagedObjectContext = self.mainManagedObjectContext;
+            [self.operationQueue addOperation:operation];
+        };
+        
+        error_block_t errorBlockForNetWork = ^(NSError *networkError) {
+            NSLog(@"log from news client: network ERROR!!! %@", networkError.localizedDescription);
+            // cannot get contents from network, try the core data
+            BBTFetchContentListOperation *operation =
+            [[BBTFetchContentListOperation alloc] initWithPublisher:publisherID
+                                                            onFocus:onFocus
+                                                         onTimeline:onTimeline
+                                                        contentType:contentType
+                                                            sinceID:sinceID
+                                                              maxID:maxID
+                                                              count:count
+                                                            success:^(NSArray *results){
+                                                                successBlock(results); // did get contents from core  data
+                                                            }
+                                                              error:^(NSError *error){
+                                                                  errorBlock(error);    // error happened!
+                                                              }];
+            operation.mainManagedObjectContext = self.mainManagedObjectContext;
+            [self.operationQueue addOperation:operation];
+        };
+        
+// TODO: trans the content diction to BBTContent and import into context
+        [[BBTHTTPSessionManager sharedManager] getContentsForPublisher:publisherID
+                                                               onFocus:onFocus
+                                                            onTimeline:onTimeline
+                                                           contentType:contentType
+                                                               sinceID:sinceID
+                                                                 maxID:maxID
+                                                                 count:count
+                                                               success:successBlockForNetWork
+                                                                 error:errorBlockForNetWork];
+    } else {
+        NSOperation *operation =
+        [[BBTFetchContentListOperation alloc] initWithPublisher:publisherID
+                                                        onFocus:onFocus
+                                                     onTimeline:onTimeline
+                                                    contentType:contentType
+                                                        sinceID:sinceID
+                                                          maxID:maxID
+                                                          count:count
+                                                        success:^(NSArray *results){
+                                                            successBlock(results); // did get contents from core  data
+                                                        }
+                                                          error:^(NSError *error){
+                                                              errorBlock(error);    // error happened!
+                                                          }];
+        [self.operationQueue addOperation:operation];
+    }
+    
 }
 
 - (void)getSubcontentsForContent:(NSNumber *)contentID
@@ -183,6 +242,7 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
+        NSLog(@"saved");
     }
 }
 

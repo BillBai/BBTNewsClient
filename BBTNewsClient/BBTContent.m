@@ -96,4 +96,19 @@
     }
 }
 
++ (BBTContentType)contentTypeFromString:(NSString *)typeString
+{
+    if ([typeString isEqualToString:@"album"]) {
+        return BBTContentTypeAlbum;
+    } else if ([typeString isEqualToString:@"special"]) {
+        return BBTContentTypeSpecial;
+    } else if ([typeString isEqualToString:@"vedio"]) {
+        return BBTContentTypeVedio;
+    } else if ([typeString isEqualToString:@"article"]) {
+        return BBTContentTypeArticle;
+    } else {
+        return BBTContentTypeNone;
+    }
+}
+
 @end

@@ -15,16 +15,14 @@
 
 @property (nonatomic, strong) NSManagedObjectContext *mainManagedObjectContext;
 
-
-- (instancetype)initWithMainManagedObjectContext:(NSManagedObjectContext *)mainObjectContext
-                                       Publisher:(NSNumber *)publisherID
-                                         onFocus:(BOOL)onFocus
-                                      onTimeline:(BOOL)onTimeline
-                                     contentType:(BBTContentType)contentType
-                                         sinceID:(NSNumber *)sinceID
-                                           maxID:(NSNumber *)maxID
-                                           count:(NSNumber *)count
-                                         success:(void (^)(NSArray *result))successBlock // of NSManagedObjectID
-                                           error:(void (^)(NSError *error))errorBlock;
+- (instancetype)initWithPublisher:(NSNumber *)publisherID
+                          onFocus:(BOOL)onFocus
+                       onTimeline:(BOOL)onTimeline
+                      contentType:(BBTContentType)contentType
+                          sinceID:(NSNumber *)sinceID
+                            maxID:(NSNumber *)maxID
+                            count:(NSNumber *)count
+                          success:(void (^)(NSArray *result))successBlock
+                            error:(void (^)(NSError *error))errorBlock;
 
 @end

@@ -37,6 +37,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, retain) NSNumber * contentType;
 @property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) NSString * headerImageInfo;
+@property (nonatomic, retain) id thumbImageURL;
 @property (nonatomic, retain) id headerImageURL;
 @property (nonatomic, retain) NSNumber * onFocus;
 @property (nonatomic, retain) NSNumber * onTimeline;
@@ -67,8 +68,14 @@ typedef enum : NSUInteger {
 - (void)addSubContents:(NSSet *)values;
 - (void)removeSubContents:(NSSet *)values;
 
+- (BBTContentType)contentTypeRaw;
+- (void)setContentTypeRaw:(BBTContentType)contentType;
+- (BBTContentStatus)contentStatusRaw;
+- (void)setContentStatusRaw:(BBTContentStatus)contentStatus;
+
 # pragma mark - Helpers
 
 + (NSString *)contentTypeString:(BBTContentType)type;
++ (BBTContentType)contentTypeFromString:(NSString *)typeString;
 
 @end

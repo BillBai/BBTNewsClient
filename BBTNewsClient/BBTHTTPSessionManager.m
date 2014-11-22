@@ -7,6 +7,7 @@
 //
 
 #import "BBTHTTPSessionManager.h"
+#import "NSError+BBTNewsClient.h"
 
 @implementation BBTHTTPSessionManager
 
@@ -40,8 +41,8 @@
                         sinceID:(NSNumber *)sinceID
                           maxID:(NSNumber *)maxID
                           count:(NSNumber *)count
-                        success:(void (^) ( NSArray *result))successBlock
-                          error:(void (^) ( NSError *error ))errorBlock;
+                        success:(void (^) (NSArray *result))successBlock
+                          error:(void (^) (NSError *error ))errorBlock;
 {
     [self GET:publisherID ? [NSString stringWithFormat:@"publishers/%@/contents", publisherID] : @"contents"
    parameters:[BBTHTTPSessionManager GETParametersForSinceID:sinceID
@@ -50,14 +51,39 @@
                                                      onFocus:onFocus
                                                   onTimeline:onTimeline
                                                  contentType:contentType]
-      success:^(NSURLSessionDataTask *dataTast, id responseObject) {
-          NSLog(@"log from HTTP session manager: Success!!! data task: %@, response: %@", dataTast, responseObject);
-          successBlock(@[]);
+      success:^(NSURLSessionDataTask *dataTask, id responseObject) {
+          NSLog(@"log from HTTP session manager: Success!!! data task: %@", dataTask);
+          if ([responseObject isKindOfClass:[NSDictionary class]]) {
+              if ([responseObject[@"status"] isEqualToNumber:@(0)]) {
+                  successBlock(responseObject[@"list"]);
+              } else {
+                  errorBlock([NSError errorWithMessage:responseObject[@"message"]]);
+              }
+          }
       }
       failure:^(NSURLSessionDataTask *dataTast, NSError *error) {
           NSLog(@"log from HTTP session manager: ERROR!!! data task: %@", dataTast);
           errorBlock(error);
 
+      }];
+}
+
+- (void)getContent:(NSNumber *)contentID
+           succeed:(void (^)(NSDictionary *))successBlock
+             error:(void (^)(NSError *))errorBlock
+{
+    [self GET:[NSString stringWithFormat:@"contents/%@", contentID]
+   parameters:nil
+      success:^(NSURLSessionDataTask *dataTask, id responseObject) {
+          NSLog(@"log from HTTP session manager: Success!!! data task: %@", dataTask);
+          if ([responseObject isKindOfClass:[NSDictionary class]]) {
+                successBlock(responseObject);
+          }
+          successBlock(@{});
+      }
+      failure:^(NSURLSessionDataTask *dataTask, NSError *error) {
+          NSLog(@"log from HTTP session manager: ERROR!!! data task: %@", dataTask);
+          errorBlock(error);
       }];
 }
 
