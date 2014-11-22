@@ -95,8 +95,12 @@ typedef void (^error_block_t)(NSError *error);
         success_block_t successBlockForNetWork  = ^(NSArray *results) {
             //NSLog(@"log from news client: network success!!! %@", results);
             // import the results (of NSDictionarys) to Core Data
-            BBTImportContentsOperation *operation = [[BBTImportContentsOperation alloc] initWithContents:results success:^(NSArray *contentResults) {
-                successBlock(contentResults);
+            BBTImportContentsOperation *operation = [[BBTImportContentsOperation alloc] initWithContents:results success:^(NSArray *contentIDs) {
+                NSMutableArray *fetchedContents = [NSMutableArray arrayWithCapacity:[contentIDs count]];
+                for (NSManagedObjectID *contentID in contentIDs) {
+                    [fetchedContents addObject:[self.mainManagedObjectContext objectWithID:contentID]];
+                }
+                successBlock([fetchedContents copy]);
             }];
             operation.mainManagedObjectContext = self.mainManagedObjectContext;
             [self.operationQueue addOperation:operation];
@@ -113,8 +117,8 @@ typedef void (^error_block_t)(NSError *error);
                                                             sinceID:sinceID
                                                               maxID:maxID
                                                               count:count
-                                                            success:^(NSArray *results){
-                                                                successBlock(results); // did get contents from core  data
+                                                            success:^(NSArray *contentIDs){
+                                                                successBlock(contentIDs); // did get contents from core  data
                                                             }
                                                               error:^(NSError *error){
                                                                   errorBlock(error);    // error happened!
@@ -123,7 +127,6 @@ typedef void (^error_block_t)(NSError *error);
             [self.operationQueue addOperation:operation];
         };
         
-// TODO: trans the content diction to BBTContent and import into context
         [[BBTHTTPSessionManager sharedManager] getContentsForPublisher:publisherID
                                                                onFocus:onFocus
                                                             onTimeline:onTimeline
@@ -142,8 +145,8 @@ typedef void (^error_block_t)(NSError *error);
                                                         sinceID:sinceID
                                                           maxID:maxID
                                                           count:count
-                                                        success:^(NSArray *results){
-                                                            successBlock(results); // did get contents from core  data
+                                                        success:^(NSArray *contentIDs){
+                                                            successBlock(contentIDs); // did get contents from core  data
                                                         }
                                                           error:^(NSError *error){
                                                               errorBlock(error);    // error happened!

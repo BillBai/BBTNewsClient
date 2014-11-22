@@ -18,38 +18,25 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-   [[BBTNewsClient sharedNewsClient] getContentsForPublisher:@(2)
-                                                     onFocus:NO
-                                                  onTimeline:YES
-                                                 contentType:BBTContentTypeNone
-                                                     sinceID:nil
-                                                       maxID:nil
-                                                       count:@(67)
-                                                     success:^(NSArray *results) {
-                                                         NSLog(@"log from main: success");
-                                                         NSLog(@"%@", results);
-                                                     }
-                                                       error:^(NSError *error) {
-                                                           NSLog(@"log from main: ERROR!!!");
-                                                       }];
-//    [[BBTNewsClient sharedNewsClient] getContentsForPublisher:nil
-//                                                      onFocus:NO
-//                                                   onTimeline:YES
-//                                                  contentType:BBTContentTypeNone
-//                                                      sinceID:nil
-//                                                        maxID:nil
-//                                                        count:nil
-//                                                      success:^(NSArray *results) {
-//                                                          NSLog(@"log from main: success");
-//                                                      }
-//                                                        error:^(NSError *error) {
-//                                                            NSLog(@"log from main: ERROR!!!");
-//                                                        }];
-    
+//   [[BBTNewsClient sharedNewsClient] getContentsForPublisher:nil
+//                                                     onFocus:NO
+//                                                  onTimeline:YES
+//                                                 contentType:BBTContentTypeNone
+//                                                     sinceID:nil
+//                                                       maxID:nil
+//                                                       count:nil
+//                                                     success:^(NSArray *results) {
+//                                                         NSLog(@"log from main: success");
+//                                                         NSLog(@"%@", results);
+//                                                     }
+//                                                       error:^(NSError *error) {
+//                                                           NSLog(@"log from main: ERROR!!!");
+//                                                       }];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"BBTContent" inManagedObjectContext:[BBTNewsClient sharedNewsClient].mainManagedObjectContext];
     [fetchRequest setEntity:entity];
+    [fetchRequest setReturnsObjectsAsFaults:NO];
     
     NSError *error = nil;
     NSArray *result = [[BBTNewsClient sharedNewsClient].mainManagedObjectContext executeFetchRequest:fetchRequest error:&error];
@@ -59,7 +46,7 @@
         NSLog(@"%@, %@", error, error.localizedDescription);
         
     } else {
-        NSLog(@"%@", result);
+        NSLog(@"fetched results : %@", result);
     }
     return YES;
 }
