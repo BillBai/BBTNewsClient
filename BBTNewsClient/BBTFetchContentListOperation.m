@@ -7,8 +7,6 @@
 //
 
 #import "BBTFetchContentListOperation.h"
-#import <AFNetworking/AFNetworking.h>
-#import "BBTHTTPOperationManager.h"
 
 
 typedef void (^success_block_t)(NSArray *result);
@@ -17,9 +15,7 @@ typedef void (^error_block_t)(NSError *error);
 @interface BBTFetchContentListOperation()
 
 @property (nonatomic, strong) NSManagedObjectContext *privateManagedObjectContext;
-@property (nonatomic) BOOL online;
 
-@property (nonatomic, strong) NSNumber *sectionID;
 @property (nonatomic, strong) NSNumber *publisherID;
 @property (nonatomic, strong) NSNumber *sinceID;
 @property (nonatomic, strong) NSNumber *maxID;
@@ -36,8 +32,6 @@ typedef void (^error_block_t)(NSError *error);
 @implementation BBTFetchContentListOperation
 
 - (instancetype)initWithMainManagedObjectContext:(NSManagedObjectContext *)mainObjectContext
-                                          online:(BOOL)online
-                                         Section:(NSNumber *)sectionID
                                        Publisher:(NSNumber *)publisherID
                                          onFocus:(BOOL)onFocus
                                       onTimeline:(BOOL)onTimeline
@@ -51,10 +45,8 @@ typedef void (^error_block_t)(NSError *error);
     self = [super init];
     if (self) {
         self.mainManagedObjectContext = mainObjectContext;
-        self.online = online;
         self.successBlock = successBlock;
         self.errorBlock = errorBlock;
-        self.sectionID = sectionID;
         self.publisherID = publisherID;
         self.onFocus = onFocus;
         self.onTimeline = onTimeline;
@@ -72,35 +64,6 @@ typedef void (^error_block_t)(NSError *error);
     self.privateManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     
     [self.privateManagedObjectContext setParentContext:self.mainManagedObjectContext];
-    
-    
-    // Detect the network reachability
-    if (self.online) { // If online, try to get the content list from the API first
-        NSLog(@"getting contents from network");
-        BBTHTTPOperationManager *manager = [[BBTHTTPOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://api.bbtnewskit-test.com:3000/v1/"]];
-        [manager getContentsForSection:self.sectionID
-                             Publisher:self.publisherID
-                               onFocus:self.onFocus
-                            onTimeline:self.onTimeline
-                           contentType:self.contentType
-                               sinceID:self.sinceID
-                                 maxID:self.maxID
-                                 count:self.count
-                               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                   NSLog(@"log from fetch operation: %@", responseObject);
-                                   dispatch_async(dispatch_get_main_queue(), ^(void) {
-                                       self.successBlock(responseObject);
-                                   });
-                               }
-                               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                   NSLog(@"log from fetch operation: %@", error.localizedDescription);
-                                   dispatch_async(dispatch_get_main_queue(), ^(void) {
-                                       self.errorBlock(error);
-                                   });
-                               }];
-    } else {    // if thers is no network connection, just get the content list from the core data.
-        
-    }
     
 }
 

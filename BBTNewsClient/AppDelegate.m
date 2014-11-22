@@ -18,19 +18,32 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [[BBTNewsClient sharedNewsClient] getContentsForSection:nil
-                                                  Publisher:nil
-                                                    onFocus:NO
-                                                 onTimeline:NO
-                                                contentType:0
-                                                    sinceID:nil
-                                                      maxID:nil
-                                                      count:nil
-                                                    success:^(NSArray *result) {
-                                                        NSLog(@"log from main 23333");
-                                                    } error:^(NSError *error) {
-                                                        NSLog(@"log from main 55555");
-                                                    }];
+    [[BBTNewsClient sharedNewsClient] getContentsForPublisher:@(2)
+                                                      onFocus:NO
+                                                   onTimeline:YES
+                                                  contentType:BBTContentTypeNone
+                                                      sinceID:nil
+                                                        maxID:nil
+                                                        count:nil
+                                                      success:^(NSArray *results) {
+                                                          NSLog(@"log from main: success");
+                                                      }
+                                                        error:^(NSError *error) {
+                                                            NSLog(@"log from main: ERROR!!!");
+                                                        }];
+    [[BBTNewsClient sharedNewsClient] getContentsForPublisher:nil
+                                                      onFocus:NO
+                                                   onTimeline:YES
+                                                  contentType:BBTContentTypeNone
+                                                      sinceID:nil
+                                                        maxID:nil
+                                                        count:nil
+                                                      success:^(NSArray *results) {
+                                                          NSLog(@"log from main: success");
+                                                      }
+                                                        error:^(NSError *error) {
+                                                            NSLog(@"log from main: ERROR!!!");
+                                                        }];
     return YES;
 }
 

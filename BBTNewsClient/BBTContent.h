@@ -19,10 +19,11 @@ typedef enum : NSUInteger {
 } BBTContentStatus;
 
 typedef enum : NSUInteger {
-    BBTContentTypeArticle = 0,      // primitive
-    BBTContentTypeAlbum = 1,        // a album will contain a set of BBTPhoto(s)
-    BBTContentTypeVedio = 2,        // primitive
-    BBTContentTypeSpecial = 3       // a special will contail some sub contents of type BBTContent
+    BBTContentTypeNone = 0,         // for not specified
+    BBTContentTypeArticle = 1,      // primitive
+    BBTContentTypeAlbum = 2,        // a album will contain a set of BBTPhoto(s)
+    BBTContentTypeVedio = 3,        // primitive
+    BBTContentTypeSpecial = 4       // a special will contail some sub contents of type BBTContent
 } BBTContentType;
 
 @class BBTAuthor, BBTContent, BBTPhoto, BBTPublisher, BBTSection;
@@ -65,5 +66,9 @@ typedef enum : NSUInteger {
 - (void)removeSubContentsObject:(BBTContent *)value;
 - (void)addSubContents:(NSSet *)values;
 - (void)removeSubContents:(NSSet *)values;
+
+# pragma mark - Helpers
+
++ (NSString *)contentTypeString:(BBTContentType)type;
 
 @end

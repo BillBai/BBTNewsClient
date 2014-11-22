@@ -17,8 +17,6 @@
 
 
 - (instancetype)initWithMainManagedObjectContext:(NSManagedObjectContext *)mainObjectContext
-                                          online:(BOOL)online
-                                         Section:(NSNumber *)sectionID
                                        Publisher:(NSNumber *)publisherID
                                          onFocus:(BOOL)onFocus
                                       onTimeline:(BOOL)onTimeline

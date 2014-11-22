@@ -8,7 +8,7 @@
 
 #import "BBTNewsClient.h"
 #import "BBTFetchContentListOperation.h"
-#import <AFNetworking/AFNetworking.h>
+#import "BBTHTTPSessionManager.h"
 
 @interface BBTNewsClient()
 
@@ -67,38 +67,31 @@
 }
 
 
-- (void)getContentsForSection:(NSNumber *)sectionID
-                    Publisher:(NSNumber *)publisherID
-                      onFocus:(BOOL)onFocus
-                   onTimeline:(BOOL)onTimeline
-                  contentType:(BBTContentType)contentType
-                      sinceID:(NSNumber *)sinceID
-                        maxID:(NSNumber *)maxID
-                        count:(NSNumber *)count
-                      success:(void (^)(NSArray *))successBlock
-                        error:(void (^)(NSError *))errorBlock
+- (void)getContentsForPublisher:(NSNumber *)publisherID
+                        onFocus:(BOOL)onFocus
+                     onTimeline:(BOOL)onTimeline
+                    contentType:(BBTContentType)contentType
+                        sinceID:(NSNumber *)sinceID
+                          maxID:(NSNumber *)maxID
+                          count:(NSNumber *)count
+                        success:(void (^)(NSArray *results))successBlock // of BBTContent
+                          error:(void (^)(NSError *error))errorBlock;
 {
-    BBTFetchContentListOperation *operation = [[BBTFetchContentListOperation alloc]
-                                               initWithMainManagedObjectContext:self.mainManagedObjectContext
-                                               online:self.isOnline
-                                               Section:sectionID
-                                               Publisher:publisherID
-                                               onFocus:onFocus
-                                               onTimeline:onTimeline
-                                               contentType:contentType
-                                               sinceID:sinceID
-                                               maxID:maxID
-                                               count:count
-                                               success:^ (NSArray *result) {
-                                                   NSLog(@"log from new client: %@", result);
-                                                   successBlock(result);
-                                               }
-                                               error:^ (NSError *error) {
-                                                   NSLog(@"log from new client: %@", error.localizedDescription);
-                                                   errorBlock(error);
-                                               }];
-    [self.operationQueue addOperation:operation];
-    
+    [[BBTHTTPSessionManager sharedManager] getContentsForPublisher:publisherID
+                                                           onFocus:onFocus
+                                                        onTimeline:onTimeline
+                                                       contentType:contentType
+                                                           sinceID:sinceID
+                                                             maxID:maxID
+                                                             count:count
+                                                           success:^(NSArray *results) {
+                                                               NSLog(@"log from news client: success!!! %@", results);
+                                                               successBlock(results);
+                                                           }
+                                                             error:^(NSError *error) {
+                                                                 NSLog(@"log from news client: ERROR!!! %@", error.localizedDescription);
+                                                                 errorBlock(error);
+                                                             }];
 }
 
 - (void)getSubcontentsForContent:(NSNumber *)contentID

@@ -28,8 +28,7 @@
 
 # pragma mark - Generic get resource method
 // get content list
-- (void)getContentsForSection:(NSNumber *)sectionID
-                    Publisher:(NSNumber *)publisherID
+- (void)getContentsForPublisher:(NSNumber *)publisherID
                       onFocus:(BOOL)onFocus
                    onTimeline:(BOOL)onTimeline
                   contentType:(BBTContentType)contentType

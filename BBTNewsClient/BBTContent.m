@@ -70,4 +70,30 @@
     return [NSSet setWithObject:@"contentStatus"];
 }
 
+
+# pragma mark - Helpers
++ (NSString *)contentTypeString:(BBTContentType)type
+{
+    switch (type) {
+        case BBTContentTypeNone:
+            return @"";
+            break;
+        case BBTContentTypeAlbum:
+            return @"albumn";
+            break;
+        case BBTContentTypeArticle:
+            return @"article";
+            break;
+        case BBTContentTypeSpecial:
+            return @"special";
+            break;
+        case BBTContentTypeVedio:
+            return @"vedio";
+            break;
+        default:
+            return @"";
+            break;
+    }
+}
+
 @end
